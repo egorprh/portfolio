@@ -1,0 +1,179 @@
+<meta charset="UTF-8">
+<script>
+	/*var a = 0;
+	var b = prompt("Висит груша нельзя скушать: ");
+	if (b == "лампочка") {
+		a++;
+		alert("Right!");
+	}else{
+		alert("Wrong..");
+	}
+	var b = prompt("In winter and in summer only one collor: ");
+	if (b == "елка" || "ёлка") {
+		a++;
+		alert("Right!");
+	}else{
+		alert("Wrong..");
+	}
+	var b = prompt("Who dress out him is cry: ");
+	if (b == "лук") {
+		a++;
+		alert("Right!");
+	}else{
+		alert("Wrong..");
+	}
+	alert ("Конец! Правильных ответов:" + a);*/
+
+    /*var c = prompt('Enter the angle:');
+    if (c > 0 && c < 120 || c > 140 && c < 350) {
+    	alert ('Nice shot!');
+    }else if (isNaN(c)) {
+        alert ('Enter only number!');
+    }else{
+    	alert('You lose.')
+    }*/
+
+
+/*var c = 0;
+do {
+var x = prompt ('Do you play with me? y/n');
+    if (x == 'y') {
+    	if((Math.random() * 6) < 1) {
+           alert('Bye motherfucker!');
+           break;
+    	}else if((Math.random() * 6) > 1){
+    		alert ('You Win!');
+    	}
+    	c++;    
+    }else if(x == 'n') {
+    	break;
+    }
+}while(true)
+alert('Количество сыгранных раундов:' + c);*/
+
+/*var a = parseInt(prompt('Start:'));
+var b = parseInt(prompt('Procent:'));
+var c = parseInt(prompt('Years:'));
+var i = 0;
+for (i = 1; i <= c; i++)   {
+	a = a + ((a * c)/100);
+	alert (a);
+}*/
+
+/*var arr = [];
+var round = 1000000;
+var length = 0;
+var max_length = 0;
+var i = 0;
+var n = 0;
+
+for (i = 0; i < round; i++){
+	n = (Math.round(Math.random() * 36));
+	if (n != 0) {
+		n = (n % 2) * 2 - 1;
+	}
+	arr.push (n);
+}
+alert (arr);
+
+for(i = 0; i < arr.length; i++) {
+	if (arr[i] == 1) {
+		length = 0;
+		while (i < arr.length && arr[i] == 1) {
+			i++;
+			length++;
+		}
+
+		if (length > max_length) {
+			max_length = length;
+		}
+	}
+}
+
+alert('Max red combination: ' + max_length);*/
+
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getCard() {
+	var cards = ['6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+	return cards [getRandomInt(0, cards.length - 1)]
+}
+
+function getSum(hand) {
+	var sum = 0;
+	for(i = 0; i < hand.length; i++) {
+		if (hand[i] != 'A') {
+			if(hand[i] == 'J') {
+				sum += 2;
+			}else if(hand[i] == 'Q') {
+				sum += 3;
+			}else if(hand[i] == 'K') {
+				sum += 4;
+			}else{
+				sum += parseInt(hand[i])
+			}
+		}else if (hand[i] == 'A') {
+			if (sum > 10) {
+				sum += 1;
+			}else {
+				sum += 11;
+			}
+		}
+	}
+	return sum;
+}
+
+function getResult() {
+	return 'Dealer: ' + dealer.join(' ') + '\n' + 'Player: ' + player.join(' ') + '\n' + 'Sum player: ' +  getSum(player) + '\n' + 'Sum dealer: ' +  getSum(dealer);
+}
+
+do{
+
+	var dealer = [];
+	var player = [];
+
+	dealer = [getCard()];
+	player = [getCard(), getCard()];
+	var answer = '';
+
+
+	if (getSum(player) == 21) {
+		alert('Increadiable Luck! BLACK JACK!!' + '\n' + getResult())
+	}else{
+		do {
+			answer = prompt(getResult() + '\n' +  'Do you want the card? Enter "y" if want to get a card. Another answet -STOP.');
+			if (answer == 'y') {
+				player.push(getCard());
+				if (getSum(player) == 21) {
+					alert('You win! Congratulations!' + '\n' +  getResult());
+					break;
+				}else if (getSum(player) > 21) {
+					alert(getResult() + '\n' + 'You are lose! Fuck!')
+					break;
+				}
+			}else{
+				while (getSum(dealer) < 18) {
+					dealer.push(getCard());
+				}
+
+				var sumDealer = getSum(dealer);
+				var sumPlayer = getSum(player);
+
+				if (sumDealer == 21) {
+					alert('Dealer is Win!' + '\n' +  getResult());
+				}else if (sumDealer > 21) {
+					alert('Dealer has overplus. You are WIN!' + '\n' +  getResult());
+				}else if (sumPlayer == sumDealer) {
+					alert('This is DRAW!' + '\n' +  getResult());
+				}else if (sumPlayer > sumDealer) {
+					alert('You are WIN!' + '\n' +  getResult());
+				}else{
+					alert('You are LOSE!(' + '\n' +  getResult());
+				}
+			}
+		} while(answer == 'y');
+	}
+}while(true)
+</script>
